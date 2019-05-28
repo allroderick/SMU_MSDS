@@ -1,0 +1,104 @@
+---
+title: "Assignment 3"
+author: "Allison Roderick"
+date: "May 27, 2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Question 1
+Cloned the git repository https://github.com/caesar0301/awesome-public-datasets to my local machine as shown below.
+
+![Alt text](C:/Users/Allison/Desktop/SMU/19U/Doing Data Science/R/awesome-public-datasets-filepath.png)
+
+# Question 2
+
+```{r}
+# Set working directory for entire assignment
+# we cannot run setwd() when we knit, so we put the entire path, or we add this to the r setup chunk:
+# knitr::opts_knit$set(root.dir = "some path") and then write all the paths relative to that
+#
+#setwd("C:/Users/Allison/Desktop/SMU/19U/Doing Data Science/R/")
+
+# Part a - read titanic.csv data
+# install.packages("readr",repos = "http://cran.us.r-project.org")
+# library(readr,lib.loc="C:/Users/Allison/Documents/R/win-library/3.5")
+library(readr)
+# if this becomes too much of a pain, just unzip the csv manually and do read.csv(), but readr definitely recommended :)
+my_file="C:/Users/Allison/Desktop/SMU/19U/Doing Data Science/R/Projects/awesome-public-datasets/Datasets/titanic.csv.zip"
+df <- read_csv(my_file)
+
+# Part b - frequency of females and males
+freq = as.data.frame(table(df$Sex))
+freq
+barplot(freq$Freq,names.arg=freq$Var1,xlab="Sex",ylab="Frequency",main="Frequency of Passangers on Titanic by Sex")
+
+# Pary c - means of Age, Fare, and Survival
+sapply(df[c("Age","Fare","Survived")],mean,na.rm=TRUE)
+```
+
+# Question 3
+```{r}
+# Read in sleep_data-01.csv
+sleep = read_csv("sleep_data_01.csv")
+
+# Part a-d
+analyze_sleep <- function(x) {
+  medianAge = median(x$Age,na.rm=TRUE)
+  minDuration = min(x$Duration,na.rm=TRUE)
+  maxDuration = max(x$Duration,na.rm=TRUE)
+  meanRSES = mean(x$RSES,na.rm=TRUE)
+  sdRSES = sd(x$RSES,na.rm=TRUE)
+  report = data.frame(MedianAge=medianAge/5,SelfEsteem=meanRSES/5,SE_SD=sdRSES/5,DurationRange=maxDuration-minDuration)
+  round(report,2)
+}
+
+# Part e
+analyze_sleep(sleep)
+```
+
+# Question 4
+```{r}
+library(fivethirtyeight)
+
+# Part b
+d538=data(package = "fivethirtyeight")
+ds538=d538$results[,"Item"]
+ds538[22]
+df=college_recent_grads
+
+# Part c
+# Found URL below through running the following code:
+#vignette("fivethirtyeight",package="fivethirtyeight")
+#https://fivethirtyeight.com/features/the-economic-guide-to-picking-a-college-major/
+
+# Part d
+dim(df)
+colnames(df)
+```
+
+# Question 5
+```{r}
+# Part a
+colnames(df)
+ncol(df)
+
+# Part b
+library(plyr)
+major_count = count(df, "major_category")
+
+# Part c
+par(las=2)
+barplot(major_count$freq,names.arg=major_count$major_category,xlab="Major",ylab="Frequency",main="Frequency of Major")
+
+# Part d 
+write_csv(major_count, "major_count.csv")
+```
+
+# Question 6
+Please see the link below and naviate to the HW3 directory to access the RMarkdown script, the HTML file, and the data from fivethirtyeight used for this assignment.
+https://github.com/allroderick/SMU_MSDS
+
