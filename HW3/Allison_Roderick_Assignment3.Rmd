@@ -12,22 +12,14 @@ knitr::opts_chunk$set(echo = TRUE)
 # Question 1
 Cloned the git repository https://github.com/caesar0301/awesome-public-datasets to my local machine as shown below.
 
-![Alt text](C:/Users/Allison/Desktop/SMU/19U/Doing Data Science/R/awesome-public-datasets-filepath.png)
+![ ](C:/Users/Allison/Desktop/SMU/19U/Doing Data Science/R/awesome-public-datasets-filepath.png)
 
 # Question 2
 
 ```{r}
-# Set working directory for entire assignment
-# we cannot run setwd() when we knit, so we put the entire path, or we add this to the r setup chunk:
-# knitr::opts_knit$set(root.dir = "some path") and then write all the paths relative to that
-#
-#setwd("C:/Users/Allison/Desktop/SMU/19U/Doing Data Science/R/")
-
 # Part a - read titanic.csv data
-# install.packages("readr",repos = "http://cran.us.r-project.org")
-# library(readr,lib.loc="C:/Users/Allison/Documents/R/win-library/3.5")
 library(readr)
-# if this becomes too much of a pain, just unzip the csv manually and do read.csv(), but readr definitely recommended :)
+
 my_file="C:/Users/Allison/Desktop/SMU/19U/Doing Data Science/R/Projects/awesome-public-datasets/Datasets/titanic.csv.zip"
 df <- read_csv(my_file)
 
@@ -36,7 +28,7 @@ freq = as.data.frame(table(df$Sex))
 freq
 barplot(freq$Freq,names.arg=freq$Var1,xlab="Sex",ylab="Frequency",main="Frequency of Passangers on Titanic by Sex")
 
-# Pary c - means of Age, Fare, and Survival
+# Part c - means of Age, Fare, and Survival
 sapply(df[c("Age","Fare","Survived")],mean,na.rm=TRUE)
 ```
 
