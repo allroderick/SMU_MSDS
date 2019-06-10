@@ -1,0 +1,103 @@
+---
+title: "Assignment 5"
+author: "Allison Roderick"
+date: "June 9, 2019"
+output: html_document
+---
+
+```{r,echo=FALSE}
+
+path1 = "C:\\Users\\Allison\\Desktop\\SMU\\19U\\Doing Data Science\\MSDS-6306-Doing-Data-Science\\Unit 5\\yob2016.txt"
+path2 = "C:\\Users\\Allison\\Desktop\\SMU\\19U\\Doing Data Science\\MSDS-6306-Doing-Data-Science\\Unit 5\\yob2015.txt"
+path3 = "C:\\Users\\Allison\\Desktop\\SMU\\19U\\Doing Data Science\\R\\pop_F.csv"
+
+```
+
+# Question 1
+## Part a
+```{r}
+# import file and asign to df
+df = read.delim(path1,sep=";",header=FALSE)
+# rename and reformat columns
+names(df) = c("Name","Gender","Count")
+df$Name = as.character(df$Name)
+df$Gender = as.character(df$Gender)
+
+```
+
+## Part b
+```{r}
+# summary and structure of df
+summary(df)
+str(df)
+
+```
+
+## Part c
+```{r}
+# identify error
+index = grep("y{3,}$",df$Name)
+df[index,]
+
+# double check that Fiona is name with the three y's at the end
+df[grep("^Fiona",df$Name),]
+
+```
+
+## Part d
+```{r}
+# remove error
+y2016 = df[-index,]
+
+```
+
+# Question 2
+## Part a
+```{r}
+# import file
+y2015 = read.delim(path2,sep=",",header=FALSE)
+
+# rename and reformat columns
+names(y2015) = c("Name","Gender","Count")
+y2015$Name = as.character(y2015$Name)
+y2015$Gender = as.character(y2015$Gender)
+str(y2015)
+```
+
+## Part b
+Below are the last ten rows in the dataframe. The names are all male Z names with count of 5. It informs me that only names with at least 5 babies born named that are included in the dataset.
+```{r}
+tail(y2015,10)
+```
+
+## Part c
+```{r}
+# merge datasets
+final = merge(y2016,y2015,by="Name")
+
+# check to make sure no na's
+final[which(is.na(final$Count.x)),]
+final[which(is.na(final$Count.y)),]
+```
+
+# Question 3
+## Part a
+```{r}
+final$Total = final$Count.x+final$Count.y
+```
+
+## Part b
+```{r}
+# sort data by decreasing Total
+final = final[order(final$Total,decreasing=TRUE),]
+```
+
+## Part c and d
+```{r}
+# write top 10 female names to csv
+pop_F = head(final[which(final$Gender.x=='F'|final$Gender.y=='F'),c("Name","Total")],10)
+write.csv(pop_F,path3,row.names = F)
+```
+
+
+
