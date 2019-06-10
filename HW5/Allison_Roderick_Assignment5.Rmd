@@ -5,6 +5,9 @@ date: "June 9, 2019"
 output: html_document
 ---
 
+# GitHub
+View Allison's GitHub at: https://github.com/allroderick/SMU_MSDS
+
 ```{r,echo=FALSE}
 
 path1 = "C:\\Users\\Allison\\Desktop\\SMU\\19U\\Doing Data Science\\MSDS-6306-Doing-Data-Science\\Unit 5\\yob2016.txt"
