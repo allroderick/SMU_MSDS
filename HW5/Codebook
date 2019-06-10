@@ -1,0 +1,12 @@
+df = data.frame that gets created from yob2016.txt
+
+index = number that holds the row number of the name ending with three y's
+
+y2016 = df with name ending with three y's removed
+
+y2015 = data.frame that gets created from yob2015.txt
+
+final = y2016 and y2015 merged with only names that are contained in both data.frames
+
+pop_F = top 10 Female names from final
+* stored in pop_F.csv
